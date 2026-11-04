@@ -20,7 +20,7 @@ import { getProjectSlugs } from "@/lib/projects";
  */
 export const dynamic = "force-static";
 
-const CONTENT_UPDATED = "2026-10-16";
+const CONTENT_UPDATED = "2026-11-04";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(CONTENT_UPDATED);

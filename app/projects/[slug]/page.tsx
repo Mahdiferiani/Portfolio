@@ -21,14 +21,22 @@ export async function generateMetadata({
     return { title: "Project Not Found" };
   }
 
+  /* The subtitle says what the thing is, which is what someone searching by
+     problem rather than by name actually types. */
+  const title = project.subtitle
+    ? `${project.title} — ${project.subtitle} | Mahdi Feriani`
+    : `${project.title} | Mahdi Feriani`;
+
   return {
-    title: `${project.title} | Mahdi Feriani`,
+    title,
     description: project.description,
+    ...(project.keywords?.length ? { keywords: project.keywords } : {}),
     alternates: {
       canonical: `/projects/${slug}`,
     },
     openGraph: {
-      title: `${project.title} | Mahdi Feriani`,
+      title,
+      type: "article",
       description: project.description,
       images: project.gallery?.length ? [project.gallery[0]] : [project.image],
     },

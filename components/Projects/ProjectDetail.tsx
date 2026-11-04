@@ -3,6 +3,7 @@ import Link from "next/link";
 import Footer from "@/components/Footer/Footer";
 import Navbar from "@/components/Navbar/Navbar";
 import ProjectCarousel from "@/components/Projects/ProjectCarousel";
+import { getProjectJsonLd } from "@/lib/json-ld";
 import type { Project } from "@/types/portfolio";
 import styles from "./ProjectDetail.module.css";
 
@@ -12,9 +13,18 @@ interface ProjectDetailProps {
 
 export default function ProjectDetail({ project }: ProjectDetailProps) {
   const hasGallery = Boolean(project.gallery?.length);
+  /* Only pages that have a slug are reachable as their own URL, so only
+     those are worth describing to a crawler as an entity. */
+  const jsonLd = project.slug ? getProjectJsonLd(project) : null;
 
   return (
     <div className={styles.page}>
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
       {/* The site's own bar and footer: this page used to render on its own,
           with a text link as the only way out and no theme control at all —
           and it is the page a recruiter lands on from the reel. */}

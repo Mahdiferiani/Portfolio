@@ -141,6 +141,28 @@ export interface Project {
   gallery?: string[];
   galleryAspectRatio?: string;
   galleryMaxWidth?: string;
+  /**
+   * Search terms for the detail page's metadata. Only worth setting on a
+   * project that people would look for by problem rather than by name — a
+   * published product, not a client build nobody is searching for.
+   */
+  keywords?: string[];
+  /**
+   * Present only on a project that is an installable product, and the reason
+   * the detail page can describe itself as SoftwareApplication rather than a
+   * generic page about some work. `installUrl` is `demoUrl` — the store link
+   * is the install link — so it isn't repeated here.
+   */
+  software?: {
+    /** schema.org applicationCategory, e.g. "BrowserApplication". */
+    applicationCategory: string;
+    operatingSystem: string;
+    /** "0" for free; the offer is what makes the listing eligible at all. */
+    price: string;
+    priceCurrency: string;
+    /** ISO date the thing went live, not the date work started. */
+    datePublished: string;
+  };
 }
 
 export interface ContactForm {

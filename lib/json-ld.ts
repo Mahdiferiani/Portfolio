@@ -1,3 +1,4 @@
+import type { Project } from "@/types/portfolio";
 import {
   education,
   heroContent,
@@ -91,6 +92,112 @@ export function getPersonJsonLd() {
         isPartOf: { "@id": `${siteConfig.url}/#website` },
         about: { "@id": `${siteConfig.url}/#person` },
         mainEntity: { "@id": `${siteConfig.url}/#person` },
+        inLanguage: "en-US",
+      },
+    ],
+  };
+}
+
+/**
+ * Structured data for one project page.
+ *
+ * The homepage's job is to establish a person; a project page's job is to be
+ * the page Google returns for the thing itself. So this describes the work as
+ * an entity — SoftwareApplication where the project is something you can
+ * install, CreativeWork otherwise — with the author tied back to the Person
+ * node on the homepage by `@id`, so the two pages corroborate each other
+ * instead of reading as unrelated documents.
+ *
+ * The breadcrumb is here rather than in markup because the page's own "Back to
+ * projects" link is not a breadcrumb trail and shouldn't be mistaken for one.
+ */
+export function getProjectJsonLd(project: Project) {
+  const pageUrl = `${siteConfig.url}/projects/${project.slug}`;
+  const images = (project.gallery?.length ? project.gallery : [project.image]).map(
+    (src) => `${siteConfig.url}${src}`,
+  );
+
+  const author = { "@id": `${siteConfig.url}/#person` };
+
+  /**
+   * An offer is what makes a SoftwareApplication listing eligible at all —
+   * Google drops the entity without a price, and "free" has to be stated as
+   * 0 rather than left out.
+   */
+  const application = project.software
+    ? {
+        "@type": "SoftwareApplication",
+        "@id": `${pageUrl}/#software`,
+        name: project.title,
+        alternateName: project.subtitle,
+        url: pageUrl,
+        description: project.description,
+        applicationCategory: project.software.applicationCategory,
+        operatingSystem: project.software.operatingSystem,
+        datePublished: project.software.datePublished,
+        image: images[0],
+        screenshot: images,
+        ...(project.demoUrl ? { installUrl: project.demoUrl, downloadUrl: project.demoUrl } : {}),
+        ...(project.keywords?.length ? { keywords: project.keywords.join(", ") } : {}),
+        offers: {
+          "@type": "Offer",
+          price: project.software.price,
+          priceCurrency: project.software.priceCurrency,
+          availability: "https://schema.org/InStock",
+        },
+        author,
+        creator: author,
+      }
+    : {
+        "@type": "CreativeWork",
+        "@id": `${pageUrl}/#work`,
+        name: project.title,
+        alternateName: project.subtitle,
+        url: pageUrl,
+        description: project.description,
+        image: images[0],
+        ...(project.keywords?.length ? { keywords: project.keywords.join(", ") } : {}),
+        author,
+        creator: author,
+      };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      application,
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}/#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteConfig.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Work",
+            item: `${siteConfig.url}/#projects`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: project.title,
+            item: pageUrl,
+          },
+        ],
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}/#webpage`,
+        url: pageUrl,
+        name: `${project.title} | ${siteConfig.name}`,
+        description: project.description,
+        isPartOf: { "@id": `${siteConfig.url}/#website` },
+        about: { "@id": application["@id"] },
+        breadcrumb: { "@id": `${pageUrl}/#breadcrumb` },
         inLanguage: "en-US",
       },
     ],

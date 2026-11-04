@@ -275,6 +275,66 @@ export const workExperience: ExperienceItem[] = [
 
 export const projects: Project[] = [
   {
+    title: "Flow Batch",
+    slug: "flow-batch",
+    subtitle: "Bulk Prompt Queue for Google Flow",
+    company: "Personal Project",
+    description:
+      "Published Chrome extension that turns a list of prompts into a folder of finished images. It queues every prompt into Google Flow, generates them one at a time, and saves each image to disk numbered by prompt order — a forty-prompt shot list becomes one press.",
+    image: "/images/projects/flow-batch-icon.webp",
+    imageStyle: "iconBackground",
+    demoUrl:
+      "https://chromewebstore.google.com/detail/flow-batch-%E2%80%94-bulk-prompt/jonfecaoembgmdbfamglaogplhcehmif",
+    linkLabel: "Install from the Chrome Web Store",
+    galleryAspectRatio: "16 / 10",
+    galleryMaxWidth: "720px",
+    gallery: [
+      "/images/projects/flow-batch/screenshot-1.webp",
+      "/images/projects/flow-batch/screenshot-2.webp",
+      "/images/projects/flow-batch/screenshot-3.webp",
+      "/images/projects/flow-batch/screenshot-4.webp",
+      "/images/projects/flow-batch/screenshot-5.webp",
+    ],
+    /**
+     * The terms someone would actually type when looking for this tool, not a
+     * restatement of the title — the page exists partly to be found by people
+     * who have the problem and don't know the product's name.
+     */
+    keywords: [
+      "Flow Batch",
+      "Google Flow bulk prompts",
+      "batch image generation Chrome extension",
+      "bulk prompt queue",
+      "AI image batch automation",
+      "Chrome side panel extension",
+      "Manifest V3",
+    ],
+    software: {
+      applicationCategory: "BrowserApplication",
+      operatingSystem: "Chrome 116+",
+      price: "0",
+      priceCurrency: "USD",
+      datePublished: "2026-11-03",
+    },
+    highlights: [
+      "Published on the Chrome Web Store: a Manifest V3 side-panel extension that queues a whole prompt list into Google Flow and saves every result named by prompt order (01.png, 17-2.png) with a filename template the user controls.",
+      "Put the run loop in the service worker rather than the panel, so closing the side panel doesn't stop a batch — pause and resume, per-prompt retries, re-queue failed, and start-from-#, across runs over an hour long.",
+      "Drove the page through the Chrome DevTools Protocol after proving Flow ignores synthetic clicks (isTrusted:false); the debugger attaches to the one selected tab only while a run is in progress and detaches the moment it ends.",
+      "Detected finished images by hooking fetch/XHR in the page's MAIN world and reading result URLs out of the app's own responses, which removed DOM polling, settle timers and image-size heuristics from the hot path.",
+      "Read Flow's model catalogue and per-model output counts from its API so the Setup tab fills itself in, and kept page selectors in a remotely updatable map so a markup change can be fixed the same day instead of waiting out a store review.",
+      "Collects nothing — no accounts, no analytics, no telemetry. Prompts and images never leave the user's machine.",
+    ],
+    quickStart: {
+      steps: [
+        "Install Flow Batch from the Chrome Web Store and pin it — the toolbar icon opens the side panel.",
+        "Open Google Flow in a tab, select that tab in the panel's Setup tab, then pick the model, aspect ratio and outputs per prompt.",
+        "Paste your prompts (or load a .txt file), press Start, and walk away — images land in Downloads/flow-batch numbered by prompt.",
+      ],
+      note:
+        "Free · Chrome 116+ · uses your own Google Flow account and credits. Independent tool, not affiliated with Google.",
+    },
+  },
+  {
     title: "Msafer",
     slug: "msafer",
     subtitle: "Collaborative Delivery Mobile Application",

@@ -26,6 +26,14 @@ export default function Projects() {
                 shares a pinned 100vh with a full-size card. */}
             <h2 className={`sectionTitle ${styles.heading}`}>Selected work</h2>
             <span className="sectionMarker" aria-hidden="true" />
+            {/* The reel is a horizontal scrub, which is a hostile thing to
+                ask a crawler — or a reader who wants the list rather than the
+                performance — to walk. This is the way out to /projects, and
+                the shallowest internal link the detail pages have. */}
+            <Link href="/projects" className={styles.allLink}>
+              All projects
+              <span aria-hidden="true">&#8599;</span>
+            </Link>
           </div>
         }
       >

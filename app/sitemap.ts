@@ -20,7 +20,7 @@ import { getProjectSlugs } from "@/lib/projects";
  */
 export const dynamic = "force-static";
 
-const CONTENT_UPDATED = "2026-11-04";
+const CONTENT_UPDATED = "2026-11-13";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date(CONTENT_UPDATED);
@@ -38,6 +38,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly",
       priority: 1,
+    },
+    {
+      /**
+       * The hub ranks above the individual projects because it is the page
+       * that should win "Mahdi Feriani projects", and below the home page
+       * because that one has to win the name on its own.
+       */
+      url: `${siteConfig.url}/projects`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
     ...projectPages,
   ];

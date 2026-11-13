@@ -28,6 +28,47 @@ h2.heading {
   font-size: clamp(2rem, min(4.6vw, 7vh), 3.25rem);
 }
 
+/* The way out of the reel, pushed to the far end of the header row. On the
+   band's dark ground, so it reads the band's ink tokens rather than the
+   paper ones the rest of the site's links use. */
+.allLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--band-rule);
+  border-radius: var(--r-pill);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--band-ink-2);
+  white-space: nowrap;
+  transition: color var(--d-2) var(--e-out),
+    border-color var(--d-2) var(--e-out), background var(--d-2) var(--e-out);
+}
+
+.allLink:hover,
+.allLink:focus-visible {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* The heading already fills the row on a phone; the link goes under it. */
+@media (max-width: 600px) {
+  .head {
+    flex-wrap: wrap;
+  }
+
+  .allLink {
+    margin-left: 0;
+  }
+}
+
 /* --- reel track: one shared vanishing point for every tilting card --- */
 
 .track {

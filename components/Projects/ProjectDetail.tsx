@@ -31,7 +31,12 @@ export default function ProjectDetail({ project }: ProjectDetailProps) {
       <Navbar />
 
       <div className={`container ${styles.topBar}`}>
-        <Link href="/#projects" className={styles.backLink}>
+        {/* Points at the hub rather than `/#projects` now that the hub
+            exists. A link back into the middle of another document was the
+            only option before; this one is the parent of the page it sits on,
+            which is both what a reader expects of a back link and what the
+            BreadcrumbList in lib/json-ld.ts claims the hierarchy is. */}
+        <Link href="/projects" className={styles.backLink}>
           <span className={styles.arrow} aria-hidden="true">
             ←
           </span>

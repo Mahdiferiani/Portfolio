@@ -99,6 +99,70 @@ export function getPersonJsonLd() {
 }
 
 /**
+ * Structured data for the /projects hub.
+ *
+ * An `ItemList` rather than a bag of CreativeWork nodes: the page's claim is
+ * that these five things are one ordered body of work, and the list is what
+ * states the relationship. Each entry points at the detail page by URL rather
+ * than restating the project inline, so the hub stays the index it looks like
+ * and the detail page remains the one canonical description of the thing —
+ * two nodes describing the same project would compete to be the entity.
+ */
+export function getProjectsIndexJsonLd(projects: Project[]) {
+  const pageUrl = `${siteConfig.url}/projects`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${pageUrl}/#webpage`,
+        url: pageUrl,
+        name: `Projects | ${siteConfig.name}`,
+        description:
+          "Selected engineering work by Mahdi Feriani — published Chrome extension, cross-platform mobile apps, full-stack web platforms and open-source tools.",
+        isPartOf: { "@id": `${siteConfig.url}/#website` },
+        about: { "@id": `${siteConfig.url}/#person` },
+        breadcrumb: { "@id": `${pageUrl}/#breadcrumb` },
+        mainEntity: { "@id": `${pageUrl}/#list` },
+        inLanguage: "en-US",
+      },
+      {
+        "@type": "ItemList",
+        "@id": `${pageUrl}/#list`,
+        name: "Selected work",
+        numberOfItems: projects.length,
+        itemListOrder: "https://schema.org/ItemListOrderAscending",
+        itemListElement: projects.map((project, index) => ({
+          "@type": "ListItem",
+          position: index + 1,
+          name: project.title,
+          url: `${siteConfig.url}/projects/${project.slug}`,
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${pageUrl}/#breadcrumb`,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: siteConfig.url,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Projects",
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  };
+}
+
+/**
  * Structured data for one project page.
  *
  * The homepage's job is to establish a person; a project page's job is to be
@@ -178,8 +242,8 @@ export function getProjectJsonLd(project: Project) {
           {
             "@type": "ListItem",
             position: 2,
-            name: "Work",
-            item: `${siteConfig.url}/#projects`,
+            name: "Projects",
+            item: `${siteConfig.url}/projects`,
           },
           {
             "@type": "ListItem",

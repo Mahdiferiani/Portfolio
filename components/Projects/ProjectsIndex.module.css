@@ -1,0 +1,213 @@
+/* ==========================================================================
+   PROJECTS INDEX
+   The hub at /projects. Shares the detail page's shell — fixed bar held open
+   by the same padding, paper ground, same tokens — so arriving here from a
+   project page is a change of content and not of site.
+   ========================================================================== */
+
+.page {
+  min-height: 100vh;
+  /* The bar is fixed, so the page has to hold its own band open. */
+  padding-top: calc(var(--nav-h) + var(--nav-gap));
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.content {
+  padding-block: var(--s-6) var(--s-9);
+}
+
+/* --- masthead --- */
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-3);
+  margin-bottom: var(--s-8);
+}
+
+.headTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+
+/* Running text, so it takes the body serif like every other paragraph on the
+   site rather than the UI sans. */
+.intro {
+  max-width: 62ch;
+  margin-top: var(--s-2);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+/* --- the grid ---
+   `auto-fit` with a floor rather than a fixed column count: at 78rem the row
+   holds two cards, and the last one in an odd list stretches to the full
+   width instead of leaving a hole. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--s-5);
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: var(--r-lg);
+  background: var(--paper-2);
+  transition: border-color var(--d-2) var(--e-out),
+    transform var(--d-2) var(--e-out), box-shadow var(--d-2) var(--e-out);
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+/* --- media ---
+   A fixed ratio so a row of cards lines its titles up regardless of what the
+   source images measure. */
+.media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--paper-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--d-3) var(--e-out);
+}
+
+.card:hover .image {
+  transform: scale(1.03);
+}
+
+/* An app icon is a mark, not a photograph: it sits centred on the ground at
+   its own size rather than being cropped to fill the frame. */
+.iconMedia {
+  display: grid;
+  place-items: center;
+  background: var(--band);
+}
+
+.appIcon {
+  /* A proportion, not 20px: the icon renders at several sizes. */
+  border-radius: 22%;
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+/* --- body --- */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  /* Pushes the CTA to the bottom edge so it sits on one line across the row
+     however much description each card carries. */
+  flex: 1;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.index {
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-style: normal;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cardTitle {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-tight);
+}
+
+.subtitle {
+  font-family: var(--sans);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.description {
+  /* The card is a summary; the detail page carries the full text. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  overflow: hidden;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-2);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: auto;
+  padding-top: var(--s-3);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* --- the one action --- */
+
+.actions {
+  display: flex;
+  margin-top: var(--s-8);
+}
+
+.contactButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 1rem 1.75rem;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  font-family: var(--mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--tr-label);
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  transition: transform var(--d-2) var(--e-out),
+    background var(--d-2) var(--e-out), color var(--d-2) var(--e-out);
+}
+
+.contactButton:hover {
+  background: transparent;
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover,
+  .card:focus-visible,
+  .contactButton:hover {
+    transform: none;
+  }
+
+  .card:hover .image {
+    transform: none;
+  }
+}

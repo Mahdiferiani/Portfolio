@@ -24,12 +24,12 @@ export const siteConfig = {
 export const socialLinks: SocialLink[] = [
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/mahdi-feriani/",
+    href: "https://www.linkedin.com/in/feriani-mahdi-996a0521a/",
     icon: "linkedin",
   },
   {
     label: "GitHub",
-    href: "https://github.com/Mahdi015",
+    href: "https://github.com/Mahdiferiani",
     icon: "github",
   }
 ];
@@ -391,7 +391,7 @@ export const projects: Project[] = [
     description:
       "Open-source AI tool that turns a video script into ranked B-roll photos and videos from stock libraries and optional social platforms.",
     image: "/images/projects/framefind.webp",
-    demoUrl: "https://github.com/Mahdi015/FrameFind",
+    demoUrl: "https://github.com/Mahdiferiani/FrameFind",
     linkLabel: "View on GitHub",
     galleryAspectRatio: "16 / 9",
     galleryMaxWidth: "720px",
@@ -410,7 +410,7 @@ export const projects: Project[] = [
         "Run the app, open the UI, paste a script, and hit Analyze script to get scenes + ranked B-roll.",
       ],
       commands: [
-        "git clone https://github.com/Mahdi015/FrameFind.git",
+        "git clone https://github.com/Mahdiferiani/FrameFind.git",
         "cd FrameFind && npm install",
         "cp apps/backend/.env.example apps/backend/.env",
         "cp apps/frontend/.env.example apps/frontend/.env.local",
